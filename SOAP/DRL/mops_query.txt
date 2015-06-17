@@ -1,0 +1,1 @@
+SELECT field_id,ra_deg,dec_deg,epoch_mjd,mag,filter_id FROM detections ORDER BY ra_deg LIMIT 1000000

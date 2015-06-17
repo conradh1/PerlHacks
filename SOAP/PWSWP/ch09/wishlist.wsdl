@@ -1,0 +1,468 @@
+<?xml version="1.0"?>
+<definitions name="WishListCustomer"
+    targetNamespace="urn:WishListCustomer"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="urn:WishListCustomer"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <documentation>
+      The WSDL Specification for WishListCustomer
+  </documentation>
+
+  <types>
+    <documentation>
+      This section defines the types that will be used by
+      the rest of the WSDL document to describe the data
+      that describes books. Only the types not already
+      available from XML Schema are defined here.
+    </documentation>
+    <xsd:schema targetNamespace="urn:WishListCustomer">
+      <xsd:complexType name="PartialBook">
+        <xsd:annotation>
+          <xsd:documentation>
+            Partial book information, returned when a
+            wish-list is fetched, or when a non-validated
+            request for a single book is received.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:all>
+          <xsd:annotation>
+            <xsd:documentation>
+              The "all" construct allows arbitrary ordering,
+              which preferable to forcing SOAP::Lite to
+              serialize the hashref in a special way. But,
+              it also allows the elements to appear 0 times,
+              which must be overridden with minOccurs.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:element name="isbn"   type="xsd:string"
+                       minOccurs="1" />
+          <xsd:element name="title"  type="xsd:string"
+                       minOccurs="1" />
+          <xsd:element name="url"    type="xsd:anyURI"
+                       minOccurs="1" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Book">
+        <xsd:annotation>
+          <xsd:documentation>
+            Extends the PartialBook type with the rest of
+            the fields that are returned for a full-info
+            request by a validated user.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:extension base="tns:PartialBook">
+          <xsd:annotation>
+            <xsd:documentation>
+              Note that minOccurs is not needed here, since
+              the GetBook operation isn't guaranteed to
+              return these two fields.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:all>
+            <xsd:element name="authors" type="xsd:string" />
+            <xsd:element name="us_price" type="xsd:string"/>
+          </xsd:all>
+        </xsd:extension>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPartialBook">
+        <xsd:annotation>
+          <xsd:documentation>
+            An array of the PartialBook type, defined above.
+            This draws on the definition of "Array" from the
+            SOAP encoding document (namespace "enc"), and
+            extends it by associating the arrayType attr
+            from WSDL.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:restriction base="enc:Array">
+            <xsd:attribute ref="enc:arrayType"
+                 wsdl:arrayType="tns:PartialBook[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfString">
+        <xsd:annotation>
+          <xsd:documentation>
+            An array of xsd:string data, the return value
+            for operations such as BooksByTitle.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:restriction base="enc:Array">
+            <xsd:attribute ref="enc:arrayType"
+                 wsdl:arrayType="xsd:string[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+
+  <!-- The service is being presented as an RPC model,
+       without going into the object-based features.
+       Instead, the SOAP binding will define header
+       requirements. Thus, only the the operational
+       parts are given operations.                       -->
+
+  <message name="BookRequest">
+    <documentation>
+      A request for a single book, passing the ISBN and
+      the user information
+    </documentation>
+    <part name="user" type="xsd:string" />
+    <part name="isbn" type="xsd:string" />
+  </message>
+
+  <message name="BookResponse">
+    <documentation>
+      For operations that return a single Book
+    </documentation>
+    <part name="return" type="tns:Book" />
+  </message>
+
+  <message name="ISBNListResponse">
+    <documentation>
+      For operations that return a list of ISBN strings
+    </documentation>
+    <part name="return" type="tns:ArrayOfString" />
+  </message>
+
+  <message name="BooksByAuthorRequest">
+    <documentation>
+      A request for all books whose authors field matches
+      the pattern in "author", also passed user information
+    </documentation>
+    <part name="user" type="xsd:string" />
+    <part name="author" type="xsd:string" />
+  </message>
+
+  <message name="BooksByTitleRequest">
+    <documentation>
+      A request for all books whose title field matches the
+      pattern in "title", also passed user information
+    </documentation>
+    <part name="user" type="xsd:string" />
+    <part name="title" type="xsd:string" />
+  </message>
+
+  <message name="SimpleRequest">
+    <documentation>
+      Requests that do not explicitly pass arguments still
+      may need the "user" element for authentication
+    </documentation>
+    <part name="user" type="xsd:string" />
+  </message>
+
+  <message name="SimpleResponse">
+    <documentation>
+      Responses from methods that do not return specific
+      data (where non-fault return means success) need a
+      generic message
+    </documentation>
+    <part name="return" type="xsd:anyType" />
+  </message>
+
+  <message name="BookListResponse">
+    <documentation>
+      A list of partial-book structures, as defined in the
+      schema, for routines like BooksByAuthor, etc.
+    </documentation>
+    <part name="return" type="tns:ArrayOfPartialBook" />
+  </message>
+
+  <message name="BooleanResponse">
+    <documentation>Simple T/F response type</documentation>
+    <part name="result" type="xsd:boolean" />
+  </message>
+
+  <message name="PurchaseBooksRequest">
+    <documentation>
+      The PurchaseBooks method requires a list of one or
+      more books (by ISBN), and the user information
+    </documentation>
+    <part name="user" type="xsd:string" />
+    <part name="list" type="tns:ArrayOfString" />
+  </message>
+
+  <portType name="WishListCustomerPort">
+    <documentation>
+      This port exposes the WishListCustomer::SOAP
+      operations
+    </documentation>
+
+    <operation name="GetBook">
+      <documentation>
+        Retrieve information on one book, specified by the
+        BookRequest message
+      </documentation>
+      <input message="tns:BookRequest" />
+      <output message="tns:BookResponse" />
+    </operation>
+
+    <operation name="BooksByAuthor">
+      <documentation>
+        Retrieve a list of books searched by the author
+        field against the substring passed in the input
+        message
+      </documentation>
+      <input message="tns:BooksByAuthorRequest" />
+      <output message="tns:ISBNListResponse" />
+    </operation>
+
+    <operation name="BooksByTitle">
+      <documentation>
+        Retrieve a list of books searched by the title
+        field against the substring passed in the input
+        message
+      </documentation>
+      <input message="tns:BooksByTitleRequest" />
+      <output message="tns:ISBNListResponse" />
+    </operation>
+
+    <operation name="Wishlist">
+      <documentation>
+        Returns the current wish-list for the user whose
+        authentication information is contained in the
+        request
+      </documentation>
+      <input message="tns:SimpleRequest" />
+      <output message="tns:BookListResponse" />
+    </operation>
+
+    <operation name="AddBook">
+      <documentation>
+        Add the specified book to the user's wish-list
+      </documentation>
+      <input message="tns:BookRequest" />
+      <output message="tns:SimpleResponse" />
+    </operation>
+
+    <operation name="RemoveBook">
+      <documentation>
+        Remove a specified book from the wish-list
+      </documentation>
+      <input message="tns:BookRequest" />
+      <output message="tns:SimpleResponse" />
+    </operation>
+
+    <operation name="CanPurchase">
+      <documentation>
+        Return a true/false value whether the user is set
+        up to purchase directly from the wish-list
+      </documentation>
+      <input message="tns:SimpleRequest" />
+      <output message="tns:BooleanResponse" />
+    </operation>
+
+    <operation name="PurchaseBooks">
+      <documentation>
+        Request to purchase one or more books from the
+        user's wish-list
+      </documentation>
+      <input message="tns:PurchaseBooksRequest" />
+      <output message="tns:SimpleResponse" />
+    </operation>
+
+  </portType>
+
+  <binding name="SOAP" type="tns:WishListCustomerPort">
+    <documentation>
+      This binding is used to define the SOAP-level parts
+      of the operations, which will later be joined with
+      the portType within a service declaration.
+    </documentation>
+    <soap:binding style="rpc"
+        transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetBook">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#GetBook" />
+      <input>
+        <soap:body use="encoded" parts="isbn"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:BookRequest" wsdl:required="0"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="BooksByAuthor">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#BooksByAuthor"/>
+      <input>
+        <soap:body use="encoded" part="author"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:BooksByAuthorRequest"
+            wsdl:required="0"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="BooksByTitle">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#BooksByTitle" />
+      <input>
+        <soap:body use="encoded" part="title"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:BooksByTitleRequest"
+            wsdl:required="0"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="Wishlist">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#Wishlist" />
+      <input>
+        <soap:body use="encoded" part=""
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:SimpleRequest"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="AddBook">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#AddBook" />
+      <input>
+        <soap:body use="encoded" part="isbn"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:BookRequest"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="RemoveBook">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#RemoveBook" />
+      <input>
+        <soap:body use="encoded" part="isbn"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:BookRequest"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="CanPurchase">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#CanPurchase" />
+      <input>
+        <soap:body use="encoded" part=""
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:SimpleRequest"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="PurchaseBooks">
+      <soap:operation soapAction=
+                      "urn:WishListCustomer#PurchaseBooks"/>
+      <input>
+        <soap:body use="encoded" part="list"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header use="encoded" part="user"
+            message="tns:PurchaseBooksRequest"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace="urn:WishListCustomer"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+
+  <service name="WishListCustomer">
+    <documentation>
+      The WishListCustomer service defines the combinations
+      of portTypes and bindings to provide the functionality
+      of the WishListCustomer class to the outside world.
+    </documentation>
+    <port name="WishListCustomerPort" binding="tns:SOAP">
+      <documentation>
+        For the binding of the portType to the SOAP-level
+        bindings, the address uses HTTP and will point to
+        a server providing the WishListCustomer::SOAP
+        interface.
+      </documentation>
+      <soap:address location="http://localhost:9000" />
+    </port>
+  </service>
+
+</definitions>

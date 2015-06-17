@@ -1,0 +1,22 @@
+Chapter 4: Programming XML-RPC
+
+These files should run without any special installation of the library that
+was written for chapter 4 (the fortune-serving library). Note that two of
+the files have had their names slightly changed:
+
+meer2html-RPC::XML.pl is now meer2html-RPC__XML.pl
+fortune-RPC::XML.pl is now fortune-RPC__XML.pl
+
+These changes were to prevent the ":" characters from causing problems with
+filesystems that consider them to be special characters.
+
+The files here are (in order of example and presentation in the chapter):
+
+meer2html-Frontier.pl (example 4-1, page 53)
+XRFortune.pm (sidebar, page 57)
+fortune-Frontier.pl (example 4-2, page 57)
+meer2html-Lite.pl (example 4-3, page 59)
+fortune-Lite.pl (example 4-4, page 64)
+meer2html-RPC__XML.pl (example 4-5, page 68)
+fortune-RPC__XML.pl (example 4-6, page 72)
+

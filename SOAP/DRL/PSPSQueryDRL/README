@@ -1,0 +1,12 @@
+To run queries against a Pan-STARRS database using this program you will 
+need the follwing:
+ -Perl Version v5.10.0 or higher
+ -SOAP::Lite (v0.710.07)
+
+This script takes two arguments a file for a query and 
+a file to write the output to
+$perl query_DRL.pl -q myquery.txt -r results.txt
+
+
+
+

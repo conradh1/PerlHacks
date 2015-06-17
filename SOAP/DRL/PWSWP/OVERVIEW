@@ -1,0 +1,39 @@
+This collection of files includes all the program code from the book,
+"Programming Web Services with Perl". The files are divided by the chapter
+in which they appeared as examples.
+
+Please note that this does not lend itself well to running the examples
+directly from within this file hierarchy. While most of the code from
+chapters 3 and 4 rely only on the various toolkits and external libraries
+from CPAN, the SOAP applications grow more and more complex. Please take
+note of the README files in individual chapter sub-directories.
+
+There are a wide range of CPAN modules that are used by these examples. The
+most obvious of these are the ones related to XML-RPC and SOAP:
+
+	LWP (libwww-perl)
+	RPC::XML
+	RPC::XMLSimple (see note below *)
+	SOAP::Lite
+	XML::Parser
+
+Additional dependancies are identified in each chapter directory. In some
+directories, a simple Makefile.PL is provided to aid in setting up libraries
+either for use when running the examples locally, or for installation if so
+desired.
+
+As much as is possible, the names of the sample files match the names used
+in the chapters and/or appendices. The README files in each chapter-specific
+directory will indicate which files correspond to which examples in that
+chapter, along with page references.
+
+Thanks for your interest in our book and our sample code.
+
+--rjray
+
+(* The RPC::XMLSimple package is the XML-RPC toolkit formerly known as
+   Frontier::RPC. According to original author Ken MacLeod, the module's
+   maintenance is now being handled by a new developer and the module is
+   going to be re-released under the new name. Despite this, there had been
+   no sign of the new version or the new name by the time the book had been
+   released.)

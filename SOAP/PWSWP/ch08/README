@@ -1,0 +1,29 @@
+Chapter 8: SOAP Services Without HTTP
+
+The examples throughout this chapter built on the SOAP service that was
+described and implemented in chapter 7. As a result, a lot of the files
+in the sibling directory for that chapter (../ch07) are needed for the
+applications here to run. Rather than modify the scripts, it is left to
+the user to remember to run these via:
+
+	perl -I../ch07 <name>
+
+If the Makefile.PL in that directory was used to install the code into
+Perl's search path, then of course this won't be necessary. It is for that
+reason that a Makefile.PL is provided here, as well.
+
+The files here are:
+
+WishListCustomer/Transport.pm (example 8-1, page 162)
+WishListCustomer/Client.pm (example 8-2, page 165)
+server-TCP.pl (example 8-3, page 165)
+client-general-1.pl (example 8-4, page 166)
+server-JABBER.pl (example 8-5, page 168)
+server-MQ.pl (example 8-6, page 170)
+server-POP3.pl (example 8-7, page 171)
+client-mailto.pl (example 8-8, page 172)
+server-IO.pl (example 8-9, page 174)
+client-general-2.pl (example 8-10, page 175)
+server+client-LOCAL.pl (example 8-11, page 176)
+Crypt/SOAP.pm (example 8-12, page 182)
+Makefile.PL (not from the text, but provided as an aid to installing the code)

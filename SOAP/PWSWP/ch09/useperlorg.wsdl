@@ -1,0 +1,319 @@
+<?xml version="1.0"?>
+<definitions name="UsePerlJournal"
+    targetNamespace="http://use.perl.org/Slash/Journal/SOAP"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://use.perl.org/Slash/Journal/SOAP"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+    <documentation>
+      This section defines the types that will be used by
+      the rest of the WSDL document to describe the data
+      that describes journal entries. Only the types not
+      already available from XML Schema are defined here.
+    </documentation>
+    <xsd:schema targetNamespace=
+                "http://use.perl.org/Slash/Journal/SOAP">
+      <xsd:complexType name="PartialEntry">
+        <xsd:annotation>
+          <xsd:documentation>
+            Partial journal entry information, this is
+            what gets returned by get_entries.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:all>
+          <xsd:element name="url" type="xsd:anyURI" />
+          <xsd:element name="id" type="xsd:int" />
+          <xsd:element name="subject" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Entry">
+        <xsd:annotation>
+          <xsd:documentation>
+            Full journal entry information, this is
+            what gets returned by get_entry.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:extension base="PartialEntry">
+          <xsd:all>
+            <xsd:element name="nickname" type="xsd:string"/>
+            <xsd:element name="body" type="xsd:string"/>
+            <xsd:element name="discussion_id"
+                         type="xsd:int" />
+            <xsd:element name="discussion_url"
+                         type="xsd:anyURI" />
+            <xsd:element name="posttype" type="xsd:int" />
+            <xsd:element name="date" type="xsd:string" />
+            <xsd:element name="tid" type="xsd:int" />
+            <xsd:element name="uid" type="xsd:int" />
+          </xsd:all>
+        </xsd:extension>
+      </xsd:complexType>
+      <xsd:complexType name="CreationEntry">
+        <xsd:annotation>
+          <xsd:documentation>
+            This is an abbreviated form of the Entry above,
+            which is used when creating an entry using full-
+            form, or when modifying an entry.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:all>
+          <xsd:element name="subject" type="xsd:string" />
+          <xsd:element name="body" type="xsd:string"/>
+          <xsd:element name="discuss" type="xsd:boolean" />
+          <xsd:element name="posttype" type="xsd:int" />
+          <xsd:element name="tid" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfPartialEntry">
+        <xsd:complexContent>
+          <xsd:restriction base="enc:Array">
+            <xsd:attribute ref="enc:arrayType"
+                 wsdl:arrayType="tns:PartialEntry[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+
+  <!-- The message names reflect the types that are passed
+       or returned, as the case may be. See the operation
+       tags in the portType below for where the messages are
+       actually used.                                    -->
+  <message name="SubjectBody">
+    <part name="subject" type="xsd:string" />
+    <part name="body" type="xsd:string" />
+  </message>
+  <message name="CreationEntry">
+    <part name="entry" type="tns:CreationEntry" />
+  </message>
+  <message name="IDCreationEntry">
+    <part name="id" type="xsd:int" />
+    <part name="entry" type="tns:CreationEntry" />
+  </message>
+  <message name="ID">
+    <part name="id" type="xsd:int" />
+  </message>
+  <message name="UidLimit">
+    <part name="uid" type="xsd:int" />
+    <part name="limit" type="xsd:int" />
+  </message>
+  <message name="IntOutput">
+    <part name="return" type="xsd:int" />
+  </message>
+  <message name="Boolean">
+    <part name="return" type="xsd:boolean" />
+  </message>
+  <message name="Entry">
+    <part name="return" type="tns:Entry" />
+  </message>
+  <message name="ListOfPartialEntry">
+    <part name="return" type="tns:ArrayOfPartialEntry" />
+  </message>
+
+  <portType name="UsePerlJournalPort">
+    <operation name="add_entry">
+      <documentation>
+        add_entry creates a new journal entry on the server
+        and returns the ID number of the entry. This form
+        of the call takes two strings, subject and body.
+      </documentation>
+      <input name="SubjectBodyCall"
+             message="tns:SubjectBody" />
+      <output message="tns:IntOutput" />
+    </operation>
+    <operation name="add_entry">
+      <documentation>
+        add_entry creates a new journal entry on the server
+        and returns the ID number of the entry. This form
+        of the call takes a structure with up to six
+        elements.
+      </documentation>
+      <input name="CreationEntryCall"
+             message="tns:CreationEntry" />
+      <output message="tns:IntOutput" />
+    </operation>
+    <operation name="modify_entry">
+      <documentation>
+        Make changes to an existing entry. Takes the ID of
+        the entry to change, and an entry structure like
+        the second form of add_entry takes. Only the fields
+        being changes should be present in the entry
+        parameter. Returns the entry ID on success.
+      </documentation>
+      <input message="tns:IDCreationEntry" />
+      <output message="tns:IntOutput" />
+    </operation>
+    <operation name="delete_entry">
+      <documentation>
+        Delete the entry specified by ID. Returns true or
+        false on success or failure.
+      </documentation>
+      <input message="tns:ID" />
+      <output message="tns:Boolean" />
+    </operation>
+    <operation name="get_entry">
+      <documentation>
+        Get the full entry indicated by the ID number in
+        the parameter.
+      </documentation>
+      <input message="tns:ID" />
+      <output message="tns:Entry" />
+    </operation>
+    <operation name="get_entries">
+      <documentation>
+        Returns an array of partial entries for the user
+        referenced by UID, up to a maximum of LIMIT entries
+        in all. If the user has fewer than LIMIT entries,
+        only that number will be returned.
+      </documentation>
+      <input message="tns:UidLimit" />
+      <output message="tns:ListOfPartialEntry" />
+    </operation>
+  </portType>
+
+  <binding name="UsePerlJournalSOAP"
+           type="tns:UsePerlJournalPort">
+    <documentation>
+      Provide the concrete binding of the operations given
+      in the port-type to the SOAP protocol. This binding
+      does not address the need for user authentication by
+      means of HTTP cookies for all operations that alter
+      entries (create, modify, delete).
+    </documentation>
+    <soap:binding style="rpc"
+                  transport=
+                  "http://schemas.xmlsoap.org/soap/http" />
+    <operation name="add_entry"
+               parameterOrder="subject body">
+      <soap:operation soapAction=
+        "http://use.perl.org/Slash/Journal/SOAP#get_entry"
+      />
+      <input name="SubjectBodyCall">
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="add_entry">
+      <soap:operation soapAction=
+        "http://use.perl.org/Slash/Journal/SOAP#add_entry"
+      />
+      <input name="CreationEntryCall">
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="modify_entry">
+      <soap:operation soapAction=
+       "http://use.perl.org/Slash/Journal/SOAP#modify_entry"
+      />
+      <input>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="delete_entry">
+      <soap:operation soapAction=
+       "http://use.perl.org/Slash/Journal/SOAP#delete_entry"
+      />
+      <input>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="get_entry">
+      <soap:operation soapAction=
+        "http://use.perl.org/Slash/Journal/SOAP#get_entry"/>
+      <input>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="get_entries">
+      <soap:operation soapAction=
+        "http://use.perl.org/Slash/Journal/SOAP#get_entries"
+      />
+      <input>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded"
+            namespace=
+            "http://use.perl.org/Slash/Journal/SOAP"
+            encodingStyle=
+            "http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+
+  <service name="UsePerlJournal">
+    <documentation>
+      Describe a service using the SOAP binding given above,
+      bound to the URL that corresponds to the use.perl.org
+      web server.
+    </documentation>
+    <port name="UsePerlJournalPort"
+          binding="tns:UsePerlJournalSOAP">
+      <soap:address location=
+                    "http://use.perl.org/soap.pl" />
+    </port>
+  </service>
+
+</definitions>

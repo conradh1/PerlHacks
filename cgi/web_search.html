@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+   <meta http-equiv="Content-Type" content="CCIS Perl Web Search Example">
+   <title>Web Search Form</title>
+   <script Language="JavaScript">
+    <!-- Hide from old Browsers
+    function search_validator(thisForm) {
+      if (thisForm.search_str.value == '') {
+        alert('You must enter some keyword(s) to do a search.');
+        thisForm.search_str.focus();
+        return(false);
+      }
+      return(true);
+    } //search_validator
+    // -->
+   </script>
+</head>
+<body text="#000000" bgcolor="#DDDDDD">
+<center>
+<img SRC="/icons/ccis2.gif"><br>
+<h2>Web Search Form</h2>
+</center>
+<form METHOD='GET' ACTION='http://sci51.acad.athabascau.ca/cgi-bin/web_search.pl' onsubmit="return search_validator(this)" name="web_search_form">
+<table BORDER=5 CELLSPACING=0 CELLPADDING=0 WIDTH="60%" align='center'
+BGCOLOR="#FFFFFF">
+<tr>
+<th>
+<br>
+<table BORDER=0 CELLSPACING=3 CELLPADDING=3 WIDTH="85%" BGCOLOR="#FFFFFF">
+  <TR>
+  <TD>Enter the keywords of your search below leaving a space between each word and click the <b>Search</b> button.
+  <p>A search can match any of the words or all the words</p>
+  </TD>
+  </TR>
+</table>
+<br>
+<table BORDER=5 CELLSPACING=3 CELLPADDING=3 WIDTH="80%" BGCOLOR="#CCCCFF">
+<tr>
+<td WIDTH="100%" bgcolor="#6600CC">
+  <br>
+  <table BORDER=0 CELLSPACING=3 CELLPADDING=3 WIDTH="100%" BGCOLOR="#6600CC">
+  <TR>
+  <TH align=left colspan=2>
+    <font size="4">&nbsp;<font color="#FFFFFF">Keywords:</font>&nbsp;&nbsp;</font><input maxLength=70 name="keywords" value= "" size=40>
+  </TH>
+  </TR>
+  <TR>
+  <TD NOWRAP>
+      <input type="radio" name="search_type" value="any" CHECKED>
+      <font color="#FFFFFF">&nbsp;Match any word</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="search_type" value="all">
+      <font color="#FFFFFF">&nbsp;Match all words</font>
+      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="search_type" value="exact">
+      <font color="#FFFFFF">&nbsp;Match Exact Phrase</font>
+  </TD>
+  <TD NOWRAP>
+   <input type=submit value="Search" value="Search">
+    &nbsp;&nbsp;&nbsp;<input type=reset value="Clear" value="Clear"></TD>
+  </TD>
+  </TR>
+  </table><br>
+</td>
+</tr>
+  </TR>
+  </TBODY>
+  </TABLE><br>
+</td>
+</tr>
+</table>
+</form>
+</BODY>
+</HTML>

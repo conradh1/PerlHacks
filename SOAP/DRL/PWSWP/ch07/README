@@ -1,0 +1,64 @@
+Chapter 7: Serving SOAP over HTTP
+
+With the code in this chapter, things become a little more complex. The
+examples in chapter 7 included several Perl classes with compound names
+(such as WishListCustomer::SOAP). Because of this, the files are presented
+in a directory hierarchy that makes it possible to run all of the executable
+applications from within this directory.
+
+However, looking ahead to the examples from chapter 8, many of those use some
+of the classes defined here. Those applications will need some special care,
+which will be addressed in the documentation in that chapter's directory.
+
+The files below are listed in the order they appear within the chapter itself.
+Some of the applications were not given names in the example headings, so
+simple names have been assigned here. Note that the two server examples that
+use the HTTP::Daemon class reference this fact in their names, but the "::"
+sequence has been changed to "__" to avoid problems on filesystems that treat
+colons specially.
+
+WishListCustomer.pm (examples 7-1 and 7-2, pp. 142-144)
+SoapExBook.pm (not listed in the text, used by WishListCustomer.pm)
+SoapExUser.pm (not listed in the text, used by WishListCustomer.pm)
+server-HTTP__Daemon-1.pl (example 7-3, page 146)
+WishListCustomer/Daemon.pm (example 7-4, page 147)
+WishListCustomer/SOAP.pm (example 7-5, page 150)
+server-HTTP__Daemon-2.pl (example 7-6, page 151)
+client-wishlist-1.pl (example 7-7, page 151)
+WishListCustomer/Apache.pm (example 7-8, page 153)
+WishListCustomer/SOAP2.pm (example 7-10, page 156)
+client-wishlist-2.pl (example 7-11, page 157)
+server-HTTP__Daemon-3.pl (not referenced as an example in the text, exists
+                          as an example of using WishListCustomer::SOAP2)
+
+The following files are also present in this directory, though they are never
+referenced by name in the text:
+
+Makefile.PL
+csv2dbm
+catalog.csv
+users.csv
+
+The Makefile.PL is a fairly simple Makefile generator that works with Perl's
+MakeMaker system, something all users of CPAN modules should be familiar with.
+It is designed to do two things: allow for installing the modules into a given
+installation location (defaulting to wherever modules get installed on your
+system), and to generate the DBM files for the book catalog and user info that
+the modules SoapExUser.pm and SoapExBook.pm rely upon. The files catalog.csv
+and users.csv are the data in a simple, comma-separated-value format. The
+csv2dbm script is used to create DB_File databases from these files. There are
+commands put into the Makefile that Makefile.PL generates to do this, with the
+following commands:
+
+	make users.db
+
+	make catalog.db
+
+The "make clean" and "make realclean" commands will remove the *.db files, in
+addition to the usual list of deletions.
+
+Much of the module code in this chapter is used by the examples in chapter 8,
+so you may wish to consider using the Makefile.PL to install the *.pm files
+into a location where they may be easily found by those applications. (Of
+course, you can also refer to this directory with the -I switch to the perl
+executable, if you prefer.)

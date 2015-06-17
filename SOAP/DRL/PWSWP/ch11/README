@@ -1,0 +1,7 @@
+Chapter 11: REST: Representational State Transfer
+
+The two files in this directory are the examples of using LWP and SOAP::Lite
+packages in REST-oriented applications.
+
+traverse.pl (example 11-1, page 253)
+parse.pl (example 11-2, page 255)

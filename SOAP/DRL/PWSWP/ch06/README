@@ -1,0 +1,22 @@
+Chapter 6: Programming SOAP
+
+Some of the examples here were not included in Appendix D because of their
+simplicity. They are here to use as a basis for exploring more of the SOAP
+functionality available. Note that due to an oversight, they were referred to
+by different names in the text, though they were meant to represent the same
+application. The names are kept here, to be consistent with the text.
+
+Some of the examples make use of additional CPAN modules:
+
+	SOAP (the Developmentor package, only used for num2text.pl)
+	XML::RSS
+
+The files, with example/page references, are:
+
+num2text.pl (example 6-1, page 115)
+num2name.pl (example 6-4, page 120)
+upj2rss.pl (example 6-5, page 122)
+upj2rss2.pl -- is not from the book, but is a modified upj2rss.pl that extracts
+               more information for each entry to add to the RSS.
+cpan2upj.pl (example 6-6, page 134)
+

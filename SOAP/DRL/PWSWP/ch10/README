@@ -1,0 +1,8 @@
+Chapter 10: Service Advertising and Discovery with UDDI
+
+The two utilities in this chapter demonstrate basic UDDI principles while also
+introducing the usage of the UDDI::Lite classes from the SOAP::Lite package.
+They are (with example and line number references):
+
+biz_by_initial.pl (example 10-6, page 232)
+show_biz.pl (shown only in fragments, starting on page 234)

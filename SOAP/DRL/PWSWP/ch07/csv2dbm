@@ -1,0 +1,42 @@
+#!/usr/bin/perl -w
+
+use Data::Dumper;
+use Storable 'freeze';
+use DB_File;
+use IO::File;
+
+my $file = shift;
+die "No file, or not ending in .csv " unless ($file and $file =~ /\.csv/);
+
+my $primarykey;
+unless ($primarykey = shift)
+{
+    $primarykey = ($file =~ /user/) ? 'name' : 'isbn';
+}
+
+($dbfile = $file) =~ s/\.csv$//;
+$dbfile .= '.db';
+
+$ifh = IO::File->new("< $file");
+tie %odb, "DB_File", $dbfile, O_RDWR|O_CREAT, 0644, $DB_HASH
+    or die "Error opening DB $file: $!\n";
+
+chomp($fields = <$ifh>);
+$fields =~ s/^"(.*)"/$1/;
+@fields = split(/","/, $fields);
+
+while (defined($_ = <$ifh>))
+{
+    %hash = ();
+    s/^"(.*)"/$1/;
+    @data = split /","/;
+    @hash{@fields} = @data;
+    ($key = $hash{$primarykey}) =~ s/-//g;
+    print "COLLISION! ($key)\n" if exists $odb{$key};
+    $odb{$key} = freeze \%hash;
+}
+
+$ifh->close;
+untie %odb;
+
+exit;

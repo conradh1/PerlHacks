@@ -1,0 +1,20 @@
+Chapter 9: Service Description with WSDL
+
+The files in this directory are not executable applications. Rather, they are
+the WSDL descriptions that were developed as a part of the chapter's
+presentation of the material. They are included here both as basic WSDL
+examples and as material to feed WSDL-related tools for the sake of testing
+and experimentation.
+
+useperlorg.wsdl
+
+This is the description for the "use Perl;" journal system's SOAP interface.
+The interface is still under development, so this description may not match
+a future API. However, this is built on the basic Slashcode code-base
+(http://www.slashcode.org) which means that other Slash-based journal systems
+would (in theory) support the same API.
+
+
+wishlist.wsdl
+
+This is the description for the sample system built up in chapters 7 and 8.

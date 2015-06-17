@@ -1,0 +1,7 @@
+Chapter 3: Introduction to XML-RPC
+
+The sole file in this directory is the meer2html.pl utility (called
+meer2html in the text) that is Example 3-8, starting on page 44.
+
+This script makes use of the XML::XPath module from CPAN to extract data
+from the XML returned by the XML-RPC server.
