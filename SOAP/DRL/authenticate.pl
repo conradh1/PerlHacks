@@ -30,8 +30,8 @@ my ($query_file, $output_file, $query);
 my $authService = new AuthServiceService;
 
 #hard coded variables needed to use the DRL service
-my $userid = "psps_tester";  #This user must be located both on the DRL and CasJobs
-my $password = "!psps!";
+my $userid = "";  #This user must be located both on the DRL and CasJobs
+my $password = "";
 
 
 #first we have to authenticate with the DRL and retrive a token
