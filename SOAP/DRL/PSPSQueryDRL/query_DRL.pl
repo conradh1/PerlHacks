@@ -43,10 +43,10 @@ if ( ! ( $query_file || $output_file )) {
 }
 
 #hard coded variables needed to use the DRL service
-my $userid = "psps_tester";  #This user must be located both on the DRL and CasJobs
-my $password = "!psps!";
-my $schemaGroup = "MOPS"; # Name of the database instance (ie PS1, MOPS )
-my $schema = "MOPS";  # Name of the database instance ( mydb, mops_test, myps1, etc )
+my $userid = "";  #This user must be located both on the DRL and CasJobs
+my $password = "";
+my $schemaGroup = ""; # Name of the database instance (ie PS1, MOPS )
+my $schema = "";  # Name of the database instance ( mydb, mops_test, myps1, etc )
 
 
 #first we have to authenticate with the DRL and retrive a token
