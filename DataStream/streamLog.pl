@@ -3,7 +3,7 @@
 
 use strict;
 use Date::Parse;
-
+use Time::Local;
 
 #  Takes the epoch time of a date and prints the log file if the difference
 # if greater than 10 seconds.
@@ -21,14 +21,18 @@ my $pivot = 0;
 
 foreach ( @stream ) {
      my $line = $_;
-     my $stamp = '';
+     my $time;
 
      #[2016-10-03 22:39:12,272] [INFO] Downloading from datastore file B01480044.tar.gz within BatchID B01480044.
      # parse out message
-     if ( $line =~ /\[(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}),\d{3}\].*$/ ) {
-      $stamp = $1;
+#      if ( $line =~ /\[(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}),\d{3}\].*$/ ) {
+#       $stamp = $1;
+#      }
+     if ( $line =~ /\[(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2}),\d{3}\].*$/ ) {
+      #my $time = timelocal($sec,$min,$hours,$day,$month,$year);
+      $time = timelocal($6,$5,$4,$3,$2,$1);
      }
-     my $time = str2time($stamp);
+     #my $time = str2time($stamp);
      if ( $time - $pivot > MAXTIME ) {
 	print $line;
 	$pivot = $time;
