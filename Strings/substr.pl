@@ -6,7 +6,7 @@ substr($quote, 0, 0)= "Conrad's";
 
 print "$quote\n";
 
-substr($quote, 0, 8)= "Eugene's";
+substr($quote, 0, 6)= "Eugene";
 # replaces 8 characters starting from position 0 in the orginal string  with a different string
 substr($quote, 22,5 )= "dull";
 # replaces 5 characters starting from position 22 in the orginal string  with a different string
