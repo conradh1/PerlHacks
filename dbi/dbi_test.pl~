@@ -1,0 +1,115 @@
+#!/usr/bin/perl -w
+##################################
+# Perl Script Version 5.0
+# Module Name: db_test.pl
+# Author: Conrad Holmberg
+# Created: April 27 - 2006
+# This program connects to ORACLE
+# test query
+##################################
+
+# imported Perl Modules
+use strict; #use strict protocol rules
+use DBI; #load DBI module
+
+use diagnostics;
+
+# DBI global variables
+use constant    DB    => 'datastore';
+
+my ($hr, $sth, $mysql_dbh,);
+my %sqls;
+
+####################Start Program###########################################
+
+      # prep static sqls...
+      do_sqls();
+
+      print "Making connection...\n";
+      mysql_connect();
+
+      do_mysql_query(); 
+
+      mysql_disconnect();
+
+      print "Done";
+      exit 0;
+####################End Program#############################################
+#*******************************************************************************
+#************************ do_mysql_query ****************************************
+sub do_mysql_query {
+
+  print "Prepare query...\n";
+
+  $sth = $mysql_dbh->prepare($sqls{'show_tables'});
+  unless ($sth) { die(" ERROR", "Unable to prep sel_auex: $DBI::errstr"); }
+
+
+  if ($sth->execute($ID)) {
+      print "Tables:\n";
+      while ($hr = $sth->fetchrow()) {
+          print "$hr\n";
+     } #while
+  }
+  else {
+    die(" ERROR", "Unable to execute sel_emp: $DBI::errstr");
+  }
+   $sth->finish;
+  print "Completed CODA query...\n";
+} #do_mysql_query
+#******************************************************************************
+#************************ aume_connect ****************************************
+sub aume_connect {
+# this subroutine connects to the database
+
+  my $usr_nm = 'webreader';
+  my $pass   = 'd2ata2';
+  my $driver = 'Oracle(AutoCommit=>0)';
+
+  $aume_dbh = DBI->connect("dbi:$driver:".AUME_SID, $usr_nm, $pass);
+
+  unless ($aume_dbh) {
+
+    do_exit("Error connecting to database: ".AUME_SID." : $DBI::errstr");
+  }
+} #aume_connect
+#******************************************************************************
+#************************ aume_disconnect *************************************
+sub mysql_disconnect {
+# this subroutine disconnects from the database
+
+  if ($sth) { $sth->finish; }
+  $aume_dbh->disconnect;
+} #aume_disconnect
+#******************************************************************************
+#************************ coda_connect ****************************************
+sub mysql_connect {
+# this subroutine connects to the database
+
+  my $usr_nm = 'conradh';
+  my $pass   = 'ps!0102';
+
+  $mysql_dbh = DBI->connect($usr_nm, $pass);
+
+  unless ($mysql_dbh) {
+
+    do_exit('error', 'Error connecting to database: '.CODA_SID." : $DBI::errstr");
+  }
+} #coda_connect
+#******************************************************************************
+#************************ coda_disconnect *************************************
+sub mysql_disconnect {
+# this subroutine disconnects from the database
+  if ($sth) { $sth->finish; }
+  $mysql_dbh->disconnect;
+} #coda_disconnect
+#******************************************************************************
+#************************ do_sqls *********************************************
+sub do_sqls {
+# create static sqls
+  %sqls = (
+
+  "show_tables" =>
+             "show_tables"
+   );
+} #do_sqls

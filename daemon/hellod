@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+#  This starts and stops a daemon.
+#
+# chkconfig: 2345 12 88
+# description: Daemon that starts say hello
+# processname: sayhello.pl
+# pidfile: /var/run/sayhello.pid
+### BEGIN INIT INFO
+# Provides: $sayhello
+### END INIT INFO
+
+# Source function library.
+#. /etc/init.d/functions
+. /lib/lsb/init-functions
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=//home/conradh/CodeSamples/Perl/daemon/sayhello
+NAME=sayhello
+DESC="Say Hello Script"
+
+[ -x $binary ] || exit 0
+
+RETVAL=0
+
+start() {
+    echo "Starting $DESC "
+    start-stop-daemon --start --quiet -n $NAME --pidfile /var/run/$NAME.pid --exec /usr/bin/perl --startas $DAEMON &
+    #daemon $DAEMON --daemon
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$NAME
+    return $RETVAL
+}
+
+stop() {
+    echo "Shutting down $DESC "
+    start-stop-daemon -K $binary -n $NAME
+    #killproc $NAME
+    RETVAL=$?
+    echo
+    if [ $RETVAL -eq 0 ]; then
+        rm -f /var/lock/subsys/$NAME
+        rm -f /var/run/$NAME.pid
+    fi
+}
+
+restart() {
+    echo -n "Restarting $DESC "
+    stop
+    sleep 2
+    start
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    status)
+        status $NAME
+    ;;
+    restart)
+        restart
+    ;;
+    *)
+        echo "Usage: $0 {start|stop|status|restart}"
+    ;;
+esac
+
+exit 0
+

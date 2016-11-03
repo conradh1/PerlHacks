@@ -1,0 +1,8 @@
+/HomePage/Perl-tutorials/tut-02/Mail-MAPI-Demo.pl: 5a3d1d1a3b7a6948dfa71d90b954b06e
+/HomePage/Perl-tutorials/tut-02/Mail-Sender-Demo.pl: eaa98bb6a76aaecfc69856140569ff85
+/HomePage/Perl-tutorials/tut-02/Mail-Sendmail-Attachment-Demo.pl: 40c55fdeb0e823529b538e45deedd410
+/HomePage/Perl-tutorials/tut-02/Mail-Sendmail-Demo.pl: 64c5867e616432edc6a0b017e9b49b88
+/HomePage/Perl-tutorials/tut-02/licence.txt: b1dc656571b06187574df689f8a7f747
+/HomePage/Perl-tutorials/tut-02/readme.txt: 4c34b7d0c6d4193bf22d647137ca9ab2
+/HomePage/Perl-tutorials/tut-02/win32-Mail-Lib.pl: 9abd31ce1fc9ce2bd3b6d3e2e0bb0f06
+/HomePage/Perl-tutorials/tut-02/win32-Mail-Test.pl: c86b9376d7bd5c56cf6da2f7f1b9ae3d

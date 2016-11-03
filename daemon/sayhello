@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Proc::Daemon;
+
+my $boo = 'x';
+Proc::Daemon::Init;
+
+my $continue = 1;
+
+$SIG{TERM} = sub { $continue = 0 };
+
+my $pid = $$;
+
+while ($continue) {
+  system("echo 'hello $pid|$boo' >> /tmp/hello.txt");
+  print "Hello $pid...\n";
+  sleep(5);
+  if ($boo eq 'x') { exit 0; }
+}
