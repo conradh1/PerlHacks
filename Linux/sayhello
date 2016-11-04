@@ -4,12 +4,16 @@ use strict;
 use warnings;
 use Proc::Daemon;
 
-my $boo = 'x';
+my $boo = 'a';
 Proc::Daemon::Init;
 
 my $continue = 1;
 
-$SIG{TERM} = sub { $continue = 0 };
+$SIG{TERM} = sub { 
+		    print "Terminate signal caught!";
+                    $continue = 0 
+
+                 };
 
 my $pid = $$;
 
