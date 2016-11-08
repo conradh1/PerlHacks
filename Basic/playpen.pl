@@ -10,7 +10,8 @@ use FileHandle;
 my @problems = ( "IP - Valid IP address",
 		"BW - Biggest Word in a File.",
 		"WA - Average Length of Words in a file.",
-		"SS - Sort sentence from longest word to shortest");
+		"SS - Sort sentence from longest word to shortest",
+		"PC - Print number of characters");
 
 print "Enter a letter to see a solution ?\n";
 
@@ -48,6 +49,13 @@ switch ( $input ) {
 	my $sentence = <STDIN>;
 	chop( $sentence );
 	sortWords( $sentence );
+      }
+
+  case "PC"  {
+        print "Print a character followed by a space for the number of times to print it: ";
+        my $input = <STDIN>;
+        my @vars = split(/\s/,$input);
+	printChars($vars[0],$vars[1]);
       }
 
   else {
@@ -165,4 +173,19 @@ my @words = split(/\s/,$sentence);
   }
   print "\n";
 }
+
+
+#############################
+# prints X number of characters
+##############################
+sub printChars() {
+
+my ($char, $total) = @_;
+
+  for ( my $i = 1; $i <= $total; $i++) {
+    print $char x $i;
+    print "\n";
+  }
+}
+
 
