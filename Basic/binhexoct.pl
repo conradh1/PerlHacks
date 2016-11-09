@@ -18,8 +18,10 @@ $num = oct($num) if $num =~ /^0/; # catches 077 0b10 0x20
 printf "Dec: %d Hex:%#x Oct: %#o  Binary: %#b\n", ($num) x 4;
 
 
+# print the hex value
 my $hex = "0xff";
 
+# print the octal value 
 my $dec = oct( $hex );
 
 print "Hex: $hex to Dec: $dec\n";
@@ -27,6 +29,7 @@ print "Hex: $hex to Dec: $dec\n";
 
 $num= 64;
 
+# print binary value
 my $bin = sprintf("%b",$num);
 
 my @bits = split(//,$bin);
