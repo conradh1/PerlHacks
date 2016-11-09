@@ -1,0 +1,49 @@
+2016-10-03 22:38:33,215 INFO Found new fileset on datastore. BatchID: B01479994
+2016-10-03 22:38:35,412 INFO Downloading from datastore file B01479994.tar.gz within BatchID B01479994.
+2016-10-03 22:38:35,666 INFO Extracting Batch file B01479994.tar.gz from BatchID B01479994.
+2016-10-03 22:38:40,019 INFO Validating Batch file B01479994.tar.gz from BatchID B01479994.
+2016-10-03 22:38:40,021 INFO Converting 00777526.FITS from FITS to CSV for BatchID B01479994.
+2016-10-03 22:39:09,875 INFO Submitted batch PV3_ST_B01479994 to ODM for loading. Response:  Batch Name: PV3_ST_B01479994 Batch State: processing Message: ODM state: None
+2016-10-03 22:39:10,036 INFO Found new fileset on datastore. BatchID: B01480044
+2016-10-03 22:39:12,272 INFO Downloading from datastore file B01480044.tar.gz within BatchID B01480044.
+2016-10-03 22:39:12,506 INFO Extracting Batch file B01480044.tar.gz from BatchID B01480044.
+2016-10-03 22:39:16,844 INFO Validating Batch file B01480044.tar.gz from BatchID B01480044.
+2016-10-03 22:39:16,845 INFO Converting 00777506.FITS from FITS to CSV for BatchID B01480044.
+2016-10-03 22:39:43,594 INFO Submitted batch PV3_ST_B01480044 to ODM for loading. Response:  Batch Name: PV3_ST_B01480044 Batch State: processing Message: ODM state: None
+2016-10-03 22:39:43,749 INFO Found new fileset on datastore. BatchID: B01480064
+2016-10-03 22:39:45,633 INFO Downloading from datastore file B01480064.tar.gz within BatchID B01480064.
+2016-10-03 22:39:45,848 INFO Extracting Batch file B01480064.tar.gz from BatchID B01480064.
+2016-10-03 22:39:49,726 INFO Validating Batch file B01480064.tar.gz from BatchID B01480064.
+2016-10-03 22:39:49,727 INFO Converting 00777511.FITS from FITS to CSV for BatchID B01480064.
+2016-10-03 22:40:14,827 INFO Submitted batch PV3_ST_B01480064 to ODM for loading. Response:  Batch Name: PV3_ST_B01480064 Batch State: processing Message: ODM state: None
+2016-10-03 22:40:14,993 INFO Found new fileset on datastore. BatchID: B01480080
+2016-10-03 22:40:17,013 INFO Downloading from datastore file B01480080.tar.gz within BatchID B01480080.
+2016-10-03 22:40:17,287 INFO Extracting Batch file B01480080.tar.gz from BatchID B01480080.
+2016-10-03 22:40:21,783 INFO Validating Batch file B01480080.tar.gz from BatchID B01480080.
+2016-10-03 22:40:21,784 INFO Converting 00777516.FITS from FITS to CSV for BatchID B01480080.
+2016-10-03 22:40:49,641 INFO Submitted batch PV3_ST_B01480080 to ODM for loading. Response:  Batch Name: PV3_ST_B01480080 Batch State: processing Message: ODM state: None
+2016-10-03 22:40:49,798 INFO Found new fileset on datastore. BatchID: B01493148
+2016-10-03 22:40:53,187 INFO Downloading from datastore file B01493148.tar.gz within BatchID B01493148.
+2016-10-03 22:40:53,272 INFO Extracting Batch file B01493148.tar.gz from BatchID B01493148.
+2016-10-03 22:40:54,815 INFO Validating Batch file B01493148.tar.gz from BatchID B01493148.
+2016-10-03 22:40:54,816 INFO Converting 00901272.FITS from FITS to CSV for BatchID B01493148.
+2016-10-03 22:41:04,437 INFO Submitted batch PV3_ST_B01493148 to ODM for loading. Response:  Batch Name: PV3_ST_B01493148 Batch State: processing Message: ODM state: None
+2016-10-03 22:41:04,596 INFO Found new fileset on datastore. BatchID: B01493168
+2016-10-03 22:41:05,938 INFO Downloading from datastore file B01493168.tar.gz within BatchID B01493168.
+2016-10-03 22:41:06,025 INFO Extracting Batch file B01493168.tar.gz from BatchID B01493168.
+2016-10-03 22:41:07,432 INFO Validating Batch file B01493168.tar.gz from BatchID B01493168.
+2016-10-03 22:41:07,433 INFO Converting 00913429.FITS from FITS to CSV for BatchID B01493168.
+2016-10-03 22:41:16,939 INFO Submitted batch PV3_ST_B01493168 to ODM for loading. Response:  Batch Name: PV3_ST_B01493168 Batch State: processing Message: ODM state: None
+2016-10-03 22:41:17,099 INFO Found new fileset on datastore. BatchID: B01493187
+2016-10-03 22:41:18,349 INFO Downloading from datastore file B01493187.tar.gz within BatchID B01493187.
+2016-10-03 22:41:18,432 INFO Extracting Batch file B01493187.tar.gz from BatchID B01493187.
+2016-10-03 22:41:20,019 INFO Validating Batch file B01493187.tar.gz from BatchID B01493187.
+2016-10-03 22:41:20,020 INFO Converting 00913415.FITS from FITS to CSV for BatchID B01493187.
+2016-10-03 22:41:29,767 INFO Submitted batch PV3_ST_B01493187 to ODM for loading. Response:  Batch Name: PV3_ST_B01493187 Batch State: processing Message: ODM state: None
+2016-10-03 22:41:29,933 INFO Found new fileset on datastore. BatchID: B01493216
+2016-10-03 22:41:31,042 INFO Downloading from datastore file B01493216.tar.gz within BatchID B01493216.
+2016-10-03 22:41:31,112 INFO Extracting Batch file B01493216.tar.gz from BatchID B01493216.
+2016-10-03 22:41:32,298 INFO Validating Batch file B01493216.tar.gz from BatchID B01493216.
+2016-10-03 22:41:32,299 INFO Converting 00917840.FITS from FITS to CSV for BatchID B01493216.
+2016-10-03 22:41:39,563 INFO Submitted batch PV3_ST_B01493216 to ODM for loading. Response:  Batch Name: PV3_ST_B01493216 Batch State: processing Message: ODM state: None
+2016-10-04 04:43:03,686 WARN WARNING: Poll Error for Datastore at 1 attempt(s): Response: 500 500 read timeout
